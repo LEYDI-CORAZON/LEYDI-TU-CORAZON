@@ -13,12 +13,12 @@
   --glass: rgba(255, 255, 255, 0.02);
   --glass-strong: rgba(255, 255, 255, 0.05);
   
-  /* Accent colors */
-  --accent-primary: #ff2d5f;
-  --accent-secondary: #ff6b8a;
-  --accent-tertiary: #ffb3c6;
-  --gold: #ffd700;
-  --platinum: #e5e4e2;
+  /* Accent colors - Vibrant Neon Theme */
+  --accent-primary: #00ffff;
+  --accent-secondary: #00bfff;
+  --accent-tertiary: #87ceeb;
+  --gold: #ffff00;
+  --platinum: #00ff80;
   
   /* Text colors */
   --text-primary: #ffffff;
@@ -26,11 +26,12 @@
   --text-muted: #8792a8;
   --text-dim: #5a6470;
   
-  /* Gradients */
+  /* Gradients - Vibrant Neon */
   --gradient-primary: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   --gradient-surface: linear-gradient(135deg, var(--surface), var(--surface-elevated));
   --gradient-glass: linear-gradient(135deg, var(--glass), var(--glass-strong));
   --gradient-bg: radial-gradient(ellipse at top, var(--bg-secondary), var(--bg-primary));
+  --gradient-neon: linear-gradient(135deg, #00ffff, #00bfff, #0080ff);
   
   /* Layout */
   --max-width: 1200px;
@@ -39,11 +40,12 @@
   --radius-large: 24px;
   --gap: 20px;
   
-  /* Shadows */
+  /* Shadows - Neon Glow Effects */
   --shadow-small: 0 2px 8px rgba(0, 0, 0, 0.2);
   --shadow-medium: 0 8px 32px rgba(0, 0, 0, 0.3);
   --shadow-large: 0 16px 64px rgba(0, 0, 0, 0.4);
-  --shadow-glow: 0 0 40px rgba(255, 45, 95, 0.3);
+  --shadow-glow: 0 0 40px rgba(0, 255, 255, 0.4);
+  --shadow-neon: 0 0 20px rgba(0, 255, 255, 0.6), 0 0 40px rgba(0, 191, 255, 0.4);
   
   /* Transitions */
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -89,9 +91,9 @@ body::before {
   width: 100%;
   height: 100%;
   background: 
-    radial-gradient(circle at 20% 80%, rgba(255, 45, 95, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 107, 138, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(255, 179, 198, 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(0, 191, 255, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(0, 128, 255, 0.08) 0%, transparent 50%);
   animation: float 20s ease-in-out infinite;
   z-index: -1;
 }
