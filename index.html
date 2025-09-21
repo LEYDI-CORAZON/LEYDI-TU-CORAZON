@@ -14,6 +14,9 @@
 
 <link rel="stylesheet" href="style.css">
 
+<!-- PayPal SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=demo&currency=USD"></script>
+
 </head>
 
 <body>
@@ -39,80 +42,197 @@
 
 <nav class="main-nav">
 
-<a href="#catalog">Catálogo</a>
+<a href="#photos">Fotos</a>
+
+<a href="#videos">Videos</a>
 
 <a href="#plans">Planes</a>
 
-<a href="#faq">FAQ</a>
-
-<a href="#contact">Contacto</a>
+<a href="#about">Sobre Mí</a>
 
 </nav>
 
 
 <div class="header-actions">
 
-<button id="openSignIn" class="btn ghost">Iniciar sesión</button>
+<button id="headerLoginBtn" class="btn ghost">Iniciar sesión</button>
 
-<button id="openSubscribe" class="btn primary">Suscribirse</button>
+<button id="headerSubscribeBtn" class="btn primary">Suscribirse</button>
 
 </div>
 
 </header>
 
 
-<!-- Hero section -->
-<section class="hero">
-  <div>
-    <h1>Contenido Premium Exclusivo</h1>
-    <p>Accede a contenido de alta calidad para mayores de 18 años. Suscripción segura y privada.</p>
-    <div class="cta">
-      <button id="heroSubscribe" class="btn primary">Comenzar suscripción</button>
-      <button id="heroDemo" class="btn ghost">Ver demo</button>
+<!-- Profile Hero section -->
+<section class="profile-hero">
+  <div class="profile-container">
+    <div class="profile-image">
+      <img id="profilePicture" src="https://picsum.photos/seed/profile/400/400" alt="Perfil" loading="lazy">
+      <div class="online-indicator"></div>
     </div>
-  </div>
-  <div class="hero-aside">
-    <div class="search-block">
-      <input type="text" id="searchInput" placeholder="Buscar contenido...">
-      <button id="doSearch" class="btn ghost">Buscar</button>
+    <div class="profile-info">
+      <h1 id="profileName">Sofia Valentina</h1>
+      <p class="profile-subtitle">Contenido Exclusivo Premium</p>
+      <p class="profile-description">
+        Bienvenido a mi mundo privado. Aquí encontrarás contenido exclusivo, fotos profesionales y videos únicos. 
+        Únete a mi comunidad VIP para acceso completo.
+      </p>
+      <div class="profile-stats">
+        <div class="stat">
+          <span class="stat-number" id="photoCount">0</span>
+          <span class="stat-label">Fotos</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number" id="videoCount">0</span>
+          <span class="stat-label">Videos</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number" id="subscriberCount">2.5K</span>
+          <span class="stat-label">Suscriptores</span>
+        </div>
+      </div>
+      <div class="profile-actions">
+        <button id="subscribeBtn" class="btn primary">
+          <span>💎</span> Suscribirse Ahora
+        </button>
+        <button id="loginBtn" class="btn ghost">
+          <span>🔐</span> Iniciar Sesión
+        </button>
+      </div>
     </div>
   </div>
 </section>
 
-
-<!-- Catalog section -->
-<section id="catalog" class="catalog">
-  <h2>Catálogo Premium</h2>
-  <div id="grid" class="grid">
-    <!-- Content will be rendered by JavaScript -->
+<!-- Photo Gallery section -->
+<section id="photos" class="gallery-section">
+  <h2>📸 Galería de Fotos</h2>
+  <div class="gallery-filter">
+    <button class="filter-btn active" data-filter="all">Todas</button>
+    <button class="filter-btn" data-filter="professional">Profesionales</button>
+    <button class="filter-btn" data-filter="casual">Casuales</button>
+    <button class="filter-btn" data-filter="exclusive">Exclusivas</button>
   </div>
-  <div style="text-align: center; margin-top: 20px;">
-    <button id="loadMore" class="btn ghost">Cargar más contenido</button>
+  <div id="photoGrid" class="photo-grid">
+    <!-- Photos will be loaded from Firebase Storage -->
+  </div>
+  <div class="load-more-container">
+    <button id="loadMorePhotos" class="btn ghost">Cargar Más Fotos</button>
+  </div>
+</section>
+
+<!-- Video Gallery section -->
+<section id="videos" class="gallery-section">
+  <h2>🎥 Galería de Videos</h2>
+  <div class="gallery-filter">
+    <button class="filter-btn active" data-filter="all">Todos</button>
+    <button class="filter-btn" data-filter="short">Cortos</button>
+    <button class="filter-btn" data-filter="long">Largos</button>
+    <button class="filter-btn" data-filter="premium">Premium</button>
+  </div>
+  <div id="videoGrid" class="video-grid">
+    <!-- Videos will be loaded from Firebase Storage -->
+  </div>
+  <div class="load-more-container">
+    <button id="loadMoreVideos" class="btn ghost">Cargar Más Videos</button>
   </div>
 </section>
 
 
-<!-- Plans section -->
-<section id="plans" style="margin-top: 40px;">
-  <h2>Planes de Suscripción</h2>
+<!-- Subscription Plans section -->
+<section id="plans" class="subscription-section">
+  <h2>💎 Planes de Suscripción VIP</h2>
+  <p class="section-subtitle">Elige tu nivel de acceso exclusivo</p>
   <div class="plans-grid">
     <div class="plan">
-      <h3>Plan Básico</h3>
-      <div class="price">$9.99/mes</div>
-      <p>Acceso a contenido básico</p>
-      <button class="btn primary">Seleccionar</button>
+      <div class="plan-badge">Básico</div>
+      <h3>Acceso Básico</h3>
+      <div class="price">$15.99<span>/mes</span></div>
+      <ul class="plan-features">
+        <li>✓ Galería de fotos (últimas 30)</li>
+        <li>✓ Videos cortos (menos de 5 min)</li>
+        <li>✓ Actualizaciones semanales</li>
+        <li>✗ Contenido exclusivo</li>
+        <li>✗ Videos largos</li>
+        <li>✗ Chat directo</li>
+      </ul>
+      <button class="btn secondary plan-btn" data-plan="basic" data-price="15.99">
+        Suscribirse con PayPal
+      </button>
+    </div>
+    <div class="plan featured">
+      <div class="plan-badge popular">Más Popular</div>
+      <h3>Acceso Premium</h3>
+      <div class="price">$29.99<span>/mes</span></div>
+      <ul class="plan-features">
+        <li>✓ Galería completa de fotos</li>
+        <li>✓ Todos los videos</li>
+        <li>✓ Contenido exclusivo premium</li>
+        <li>✓ Actualizaciones diarias</li>
+        <li>✓ Videos en HD</li>
+        <li>✗ Chat directo</li>
+      </ul>
+      <button class="btn primary plan-btn" data-plan="premium" data-price="29.99">
+        Suscribirse con PayPal
+      </button>
     </div>
     <div class="plan">
-      <h3>Plan Premium</h3>
-      <div class="price">$19.99/mes</div>
-      <p>Acceso completo + contenido exclusivo</p>
-      <button class="btn primary">Seleccionar</button>
+      <div class="plan-badge vip">VIP</div>
+      <h3>Acceso VIP</h3>
+      <div class="price">$49.99<span>/mes</span></div>
+      <ul class="plan-features">
+        <li>✓ Todo el contenido premium</li>
+        <li>✓ Contenido personalizado</li>
+        <li>✓ Videos en 4K</li>
+        <li>✓ Chat directo privado</li>
+        <li>✓ Solicitudes especiales</li>
+        <li>✓ Contenido antes que nadie</li>
+      </ul>
+      <button class="btn primary plan-btn" data-plan="vip" data-price="49.99">
+        Suscribirse con PayPal
+      </button>
     </div>
-    <div class="plan">
-      <h3>Plan VIP</h3>
-      <div class="price">$29.99/mes</div>
-      <p>Todo incluido + contenido personalizado</p>
-      <button class="btn primary">Seleccionar</button>
+  </div>
+</section>
+
+<!-- About section -->
+<section id="about" class="about-section">
+  <h2>Sobre Mí</h2>
+  <div class="about-content">
+    <div class="about-text">
+      <p>
+        ¡Hola! Soy Sofia Valentina, y este es mi espacio personal donde comparto mi contenido más exclusivo. 
+        Desde hace años, me dedico a crear contenido de alta calidad para una audiencia selecta que aprecia 
+        la elegancia y la sofisticación.
+      </p>
+      <p>
+        En mi plataforma encontrarás sesiones fotográficas profesionales, videos únicos y contenido que no 
+        verás en ningún otro lugar. Mi objetivo es crear una experiencia premium para mis suscriptores, 
+        con contenido fresco y emocionante regularmente.
+      </p>
+      <div class="about-highlights">
+        <div class="highlight">
+          <span class="highlight-icon">📅</span>
+          <div>
+            <strong>Contenido Regular</strong>
+            <p>Nuevas fotos y videos semanalmente</p>
+          </div>
+        </div>
+        <div class="highlight">
+          <span class="highlight-icon">🎥</span>
+          <div>
+            <strong>Calidad Premium</strong>
+            <p>Sesiones profesionales en HD y 4K</p>
+          </div>
+        </div>
+        <div class="highlight">
+          <span class="highlight-icon">💬</span>
+          <div>
+            <strong>Interacción Directa</strong>
+            <p>Chat exclusivo para suscriptores VIP</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -150,7 +270,7 @@
 
 
 <!-- Age Gate Modal -->
-<div id="ageGate" class="modal" aria-hidden="false">
+<div id="ageGate" class="modal" aria-hidden="true">
   <div class="modal-inner">
     <h2>Verificación de Edad</h2>
     <p>Este sitio contiene contenido para adultos. Debes tener 18 años o más para continuar.</p>
@@ -162,36 +282,66 @@
 </div>
 
 
-<!-- Sign In Modal -->
-<div id="signInModal" class="modal" aria-hidden="true">
+<!-- Authentication Modal -->
+<div id="authModal" class="modal" aria-hidden="true">
   <div class="modal-inner">
-    <h2>Iniciar Sesión</h2>
-    <form>
-      <input type="email" placeholder="Email">
-      <input type="password" placeholder="Contraseña">
-    </form>
+    <h2 id="authTitle">Iniciar Sesión</h2>
+    <p id="authSubtitle">Accede con tu cuenta de Google para continuar</p>
+    
+    <div id="authError" class="auth-error" style="display: none;"></div>
+    
+    <div class="auth-buttons">
+      <button id="googleSignInBtn" class="btn primary google-btn">
+        <span>🔐</span> Continuar con Google
+      </button>
+    </div>
+    
+    <div id="userInfo" class="user-info" style="display: none;">
+      <img id="userPhoto" src="" alt="Usuario" class="user-avatar">
+      <p id="userName"></p>
+      <p id="userEmail"></p>
+      <button id="signOutBtn" class="btn ghost">Cerrar Sesión</button>
+    </div>
+    
     <div class="modal-actions">
-      <button class="btn primary">Entrar</button>
-      <button id="closeSignIn" class="btn ghost">Cerrar</button>
+      <button id="closeAuth" class="btn ghost">Cerrar</button>
     </div>
   </div>
 </div>
 
-
-<!-- Subscribe Modal -->
-<div id="subscribeModal" class="modal" aria-hidden="true">
+<!-- Payment Modal -->
+<div id="paymentModal" class="modal" aria-hidden="true">
   <div class="modal-inner">
-    <h2>Suscribirse</h2>
-    <p>Elige tu plan y comienza a disfrutar del contenido premium.</p>
+    <h2>Procesar Pago</h2>
+    <div id="selectedPlan" class="selected-plan">
+      <h3 id="planName"></h3>
+      <div id="planPrice" class="plan-price"></div>
+    </div>
+    
+    <div class="payment-section">
+      <p>Pago seguro procesado por PayPal</p>
+      <div id="paypal-button-container"></div>
+    </div>
+    
     <div class="modal-actions">
-      <button class="btn primary">Plan Básico - $9.99</button>
-      <button class="btn primary">Plan Premium - $19.99</button>
-      <button id="closeSubscribe" class="btn ghost">Cerrar</button>
+      <button id="closePayment" class="btn ghost">Cancelar</button>
     </div>
   </div>
 </div>
 
-<script src="script.js"></script>
+<!-- Media Viewer Modal -->
+<div id="mediaModal" class="modal" aria-hidden="true">
+  <div class="modal-inner media-modal">
+    <button id="closeMedia" class="close-btn">&times;</button>
+    <div id="mediaContent"></div>
+    <div id="mediaInfo">
+      <h3 id="mediaTitle"></h3>
+      <p id="mediaDescription"></p>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="script.js"></script>
 
 </body>
 </html>
