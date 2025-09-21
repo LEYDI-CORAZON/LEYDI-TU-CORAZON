@@ -60,5 +60,139 @@
 
 </header>
 
+
+<!-- Hero section -->
+<section class="hero">
+  <div>
+    <h1>Contenido Premium Exclusivo</h1>
+    <p>Accede a contenido de alta calidad para mayores de 18 años. Suscripción segura y privada.</p>
+    <div class="cta">
+      <button id="heroSubscribe" class="btn primary">Comenzar suscripción</button>
+      <button id="heroDemo" class="btn ghost">Ver demo</button>
+    </div>
+  </div>
+  <div class="hero-aside">
+    <div class="search-block">
+      <input type="text" id="searchInput" placeholder="Buscar contenido...">
+      <button id="doSearch" class="btn ghost">Buscar</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- Catalog section -->
+<section id="catalog" class="catalog">
+  <h2>Catálogo Premium</h2>
+  <div id="grid" class="grid">
+    <!-- Content will be rendered by JavaScript -->
+  </div>
+  <div style="text-align: center; margin-top: 20px;">
+    <button id="loadMore" class="btn ghost">Cargar más contenido</button>
+  </div>
+</section>
+
+
+<!-- Plans section -->
+<section id="plans" style="margin-top: 40px;">
+  <h2>Planes de Suscripción</h2>
+  <div class="plans-grid">
+    <div class="plan">
+      <h3>Plan Básico</h3>
+      <div class="price">$9.99/mes</div>
+      <p>Acceso a contenido básico</p>
+      <button class="btn primary">Seleccionar</button>
+    </div>
+    <div class="plan">
+      <h3>Plan Premium</h3>
+      <div class="price">$19.99/mes</div>
+      <p>Acceso completo + contenido exclusivo</p>
+      <button class="btn primary">Seleccionar</button>
+    </div>
+    <div class="plan">
+      <h3>Plan VIP</h3>
+      <div class="price">$29.99/mes</div>
+      <p>Todo incluido + contenido personalizado</p>
+      <button class="btn primary">Seleccionar</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- FAQ section -->
+<section id="faq" style="margin-top: 40px;">
+  <h2>Preguntas Frecuentes</h2>
+  <div style="max-width: 600px;">
+    <details style="margin-bottom: 10px;">
+      <summary>¿Es seguro el pago?</summary>
+      <p>Sí, utilizamos procesadores de pago seguros y encriptación SSL.</p>
+    </details>
+    <details style="margin-bottom: 10px;">
+      <summary>¿Puedo cancelar en cualquier momento?</summary>
+      <p>Absolutamente, puedes cancelar tu suscripción sin compromisos.</p>
+    </details>
+  </div>
+</section>
+
+
+<!-- Contact section -->
+<section id="contact" style="margin-top: 40px;">
+  <h2>Contacto</h2>
+  <p>¿Tienes alguna pregunta? Contáctanos en: <strong>support@privateandpro.com</strong></p>
+</section>
+
+</div>
+
+
+<!-- Footer -->
+<footer class="site-footer">
+  <p>&copy; 2024 Private & Pro. Todos los derechos reservados. Solo para mayores de 18 años.</p>
+</footer>
+
+
+<!-- Age Gate Modal -->
+<div id="ageGate" class="modal" aria-hidden="false">
+  <div class="modal-inner">
+    <h2>Verificación de Edad</h2>
+    <p>Este sitio contiene contenido para adultos. Debes tener 18 años o más para continuar.</p>
+    <div class="modal-actions">
+      <button id="confirmAge" class="btn primary">Tengo 18+ años</button>
+      <button id="leaveSite" class="btn ghost">Salir del sitio</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Sign In Modal -->
+<div id="signInModal" class="modal" aria-hidden="true">
+  <div class="modal-inner">
+    <h2>Iniciar Sesión</h2>
+    <form>
+      <input type="email" placeholder="Email" style="width: 100%; padding: 10px; margin: 10px 0; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: inherit;">
+      <input type="password" placeholder="Contraseña" style="width: 100%; padding: 10px; margin: 10px 0; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: inherit;">
+    </form>
+    <div class="modal-actions">
+      <button class="btn primary">Entrar</button>
+      <button id="closeSignIn" class="btn ghost">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Subscribe Modal -->
+<div id="subscribeModal" class="modal" aria-hidden="true">
+  <div class="modal-inner">
+    <h2>Suscribirse</h2>
+    <p>Elige tu plan y comienza a disfrutar del contenido premium.</p>
+    <div class="modal-actions">
+      <button class="btn primary">Plan Básico - $9.99</button>
+      <button class="btn primary">Plan Premium - $19.99</button>
+      <button id="closeSubscribe" class="btn ghost">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
 </html>
 

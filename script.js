@@ -125,8 +125,45 @@ window.location.href = 'about:blank';
 const subscribeModal = document.getElementById('subscribeModal');
 
 document.getElementById('openSubscribe').addEventListener('click',()=>{
+  subscribeModal.removeAttribute('aria-hidden');
+});
 
-subscribeModal.removeAttribute('aria-hidden');
+document.getElementById('heroSubscribe').addEventListener('click',()=>{
+  subscribeModal.removeAttribute('aria-hidden');
+});
 
-document.addEventListener('keydown'
+document.getElementById('closeSubscribe').addEventListener('click',()=>{
+  subscribeModal.setAttribute('aria-hidden','true');
+});
+
+// Sign in modal
+const signInModal = document.getElementById('signInModal');
+
+document.getElementById('openSignIn').addEventListener('click',()=>{
+  signInModal.removeAttribute('aria-hidden');
+});
+
+document.getElementById('closeSignIn').addEventListener('click',()=>{
+  signInModal.setAttribute('aria-hidden','true');
+});
+
+// Demo button
+document.getElementById('heroDemo').addEventListener('click',()=>{
+  alert('Esta es una demo. En la versión completa tendrías acceso a todo el contenido premium.');
+});
+
+// Close modals on escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    signInModal.setAttribute('aria-hidden','true');
+    subscribeModal.setAttribute('aria-hidden','true');
+  }
+});
+
+// Close modals when clicking outside
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('modal')) {
+    e.target.setAttribute('aria-hidden','true');
+  }
+});
 
