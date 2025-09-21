@@ -814,13 +814,15 @@ details p {
   }
   
   .profile-container {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
     text-align: center;
-    gap: 32px;
+    padding: 24px 16px;
   }
   
   .profile-image {
-    align-self: center;
+    margin: 0 auto;
   }
   
   .profile-stats {
@@ -914,11 +916,15 @@ details p {
   .profile-hero {
     padding: 50px 0 40px;
     margin: 0;
+    overflow: visible;
   }
   
   .profile-container {
-    gap: 24px;
-    padding: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    padding: 16px 8px;
+    text-align: center;
   }
   
   .profile-image {
@@ -1035,10 +1041,15 @@ details p {
     padding: 40px 0 30px;
     margin: 20px 0;
     border-radius: var(--radius-large);
+    overflow: visible;
   }
   
   .profile-container {
-    padding: 20px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    padding: 16px 8px;
+    text-align: center;
   }
   
   .profile-image {
@@ -1306,6 +1317,9 @@ details p {
   padding: 60px 40px;
   position: relative;
   z-index: 2;
+  width: 100%;
+  max-width: 100%;
+  overflow: visible;
 }
 
 .profile-image {
@@ -1354,6 +1368,11 @@ details p {
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  width: 100%;
+  max-width: 100%;
 }
 
 .profile-subtitle {
@@ -1361,6 +1380,11 @@ details p {
   color: var(--accent-secondary);
   margin: 0 0 24px 0;
   font-weight: 600;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  width: 100%;
+  max-width: 100%;
 }
 
 .profile-description {
