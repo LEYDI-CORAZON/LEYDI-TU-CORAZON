@@ -530,44 +530,76 @@ function initializePayPalButton(plan, price) {
   
   // Check if PayPal SDK is loaded
   if (typeof paypal !== 'undefined') {
-    // Use actual PayPal SDK
+    // Use actual PayPal SDK with real implementation
     paypal.Buttons({
+      style: {
+        shape: 'rect',
+        color: 'gold',
+        layout: 'vertical',
+        label: 'paypal'
+      },
       createOrder: function(data, actions) {
         return actions.order.create({
           purchase_units: [{
             amount: {
-              value: price
+              value: price,
+              currency_code: 'USD'
             },
-            description: `Suscripción ${plan} - Sofia Valentina Premium`
-          }]
+            description: `Suscripción ${plan} - Sofia Valentina Premium`,
+            custom_id: `sub_${plan}_${Date.now()}`
+          }],
+          application_context: {
+            brand_name: 'Private & Pro - Sofia Valentina',
+            locale: 'es_ES',
+            user_action: 'PAY_NOW',
+            return_url: window.location.origin + '/success',
+            cancel_url: window.location.origin + '/cancel'
+          }
         });
       },
       onApprove: function(data, actions) {
+        showLoading('Procesando pago con PayPal...');
         return actions.order.capture().then(function(details) {
           processSuccessfulPayment(plan, price, details);
+        }).catch(function(error) {
+          hideLoading();
+          console.error('Payment capture error:', error);
+          showError('Error al capturar el pago. Por favor contacta soporte.');
         });
+      },
+      onCancel: function(data) {
+        console.log('Payment cancelled:', data);
+        showError('Pago cancelado. Puedes intentarlo de nuevo cuando gustes.');
       },
       onError: function(err) {
         console.error('PayPal Error:', err);
-        showError('Error al procesar el pago. Por favor intenta de nuevo.');
+        showError('Error al procesar el pago. Por favor verifica tu conexión e intenta de nuevo.');
       }
-    }).render('#paypal-button-container');
-  } else {
-    // Fallback simulation button
-    const paypalBtn = document.createElement('button');
-    paypalBtn.className = 'btn primary';
-    paypalBtn.style.width = '100%';
-    paypalBtn.innerHTML = `
-      <span style="display: inline-block; margin-right: 8px;">💳</span>
-      Pagar $${price} con PayPal (Demo)
-    `;
-    
-    paypalBtn.addEventListener('click', () => {
-      simulatePayPalPayment(plan, price);
+    }).render('#paypal-button-container').catch(function(error) {
+      console.error('PayPal render error:', error);
+      // Fallback for render errors
+      showPayPalFallback(plan, price);
     });
-    
-    container.appendChild(paypalBtn);
+  } else {
+    console.warn('PayPal SDK not loaded, showing fallback');
+    showPayPalFallback(plan, price);
   }
+}
+
+function showPayPalFallback(plan, price) {
+  const container = document.getElementById('paypal-button-container');
+  if (!container) return;
+  
+  container.innerHTML = `
+    <div style="text-align: center; padding: 20px; border: 2px dashed var(--text-muted); border-radius: var(--radius);">
+      <p style="color: var(--text-muted); margin-bottom: 16px;">
+        ⚠️ Error al cargar PayPal. Por favor recarga la página o contacta soporte.
+      </p>
+      <button class="btn secondary" onclick="location.reload()">
+        🔄 Recargar Página
+      </button>
+    </div>
+  `;
 }
 
 function simulatePayPalPayment(plan, price) {
