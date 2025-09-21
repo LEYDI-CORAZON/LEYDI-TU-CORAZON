@@ -528,76 +528,112 @@ function initializePayPalButton(plan, price) {
   // Clear existing content
   container.innerHTML = '';
   
-  // Check if PayPal SDK is loaded
-  if (typeof paypal !== 'undefined') {
-    // Use actual PayPal SDK with real implementation
+  // Wait for PayPal SDK to load
+  if (typeof paypal === 'undefined') {
+    console.warn('PayPal SDK not loaded yet, retrying...');
+    setTimeout(() => initializePayPalButton(plan, price), 1000);
+    return;
+  }
+  
+  try {
+    // Simplified PayPal integration
     paypal.Buttons({
       style: {
         shape: 'rect',
         color: 'gold',
         layout: 'vertical',
-        label: 'paypal'
+        label: 'pay',
+        height: 50
       },
+      
       createOrder: function(data, actions) {
-        return actions.order.create({
-          purchase_units: [{
-            amount: {
-              value: price,
-              currency_code: 'USD'
-            },
-            description: `Suscripción ${plan} - Sofia Valentina Premium`,
-            custom_id: `sub_${plan}_${Date.now()}`
-          }],
-          application_context: {
-            brand_name: 'Private & Pro - Sofia Valentina',
-            locale: 'es_ES',
-            user_action: 'PAY_NOW',
-            return_url: window.location.origin + '/success',
-            cancel_url: window.location.origin + '/cancel'
-          }
-        });
+        try {
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value: price.toString(),
+                currency_code: 'USD'
+              },
+              description: `Plan ${plan} - Sofia Valentina Premium`
+            }],
+            application_context: {
+              brand_name: 'Sofia Valentina Premium',
+              shipping_preference: 'NO_SHIPPING'
+            }
+          });
+        } catch (error) {
+          console.error('Create order error:', error);
+          showError('Error al crear la orden. Por favor intenta de nuevo.');
+          return Promise.reject(error);
+        }
       },
+      
       onApprove: function(data, actions) {
-        showLoading('Procesando pago con PayPal...');
+        showLoading('Procesando pago...');
+        
         return actions.order.capture().then(function(details) {
+          hideLoading();
+          console.log('Payment successful:', details);
+          
+          // Simulate successful payment processing
           processSuccessfulPayment(plan, price, details);
+          
         }).catch(function(error) {
           hideLoading();
-          console.error('Payment capture error:', error);
-          showError('Error al capturar el pago. Por favor contacta soporte.');
+          console.error('Payment capture failed:', error);
+          showError('Error al procesar el pago. Tu dinero está seguro. Por favor intenta de nuevo.');
         });
       },
+      
       onCancel: function(data) {
-        console.log('Payment cancelled:', data);
-        showError('Pago cancelado. Puedes intentarlo de nuevo cuando gustes.');
+        console.log('Payment cancelled by user:', data);
+        showNotification('Pago cancelado. Puedes continuar cuando gustes.', 'info');
       },
+      
       onError: function(err) {
-        console.error('PayPal Error:', err);
-        showError('Error al procesar el pago. Por favor verifica tu conexión e intenta de nuevo.');
+        console.error('PayPal button error:', err);
+        hideLoading();
+        showError('Error temporal de PayPal. Por favor recarga la página e intenta de nuevo.');
       }
-    }).render('#paypal-button-container').catch(function(error) {
+      
+    }).render('#paypal-button-container').then(function() {
+      console.log('PayPal button rendered successfully');
+    }).catch(function(error) {
       console.error('PayPal render error:', error);
-      // Fallback for render errors
-      showPayPalFallback(plan, price);
+      showPayPalErrorFallback(plan, price);
     });
-  } else {
-    console.warn('PayPal SDK not loaded, showing fallback');
-    showPayPalFallback(plan, price);
+    
+  } catch (error) {
+    console.error('PayPal initialization error:', error);
+    showPayPalErrorFallback(plan, price);
   }
 }
 
-function showPayPalFallback(plan, price) {
+function showPayPalErrorFallback(plan, price) {
   const container = document.getElementById('paypal-button-container');
   if (!container) return;
   
   container.innerHTML = `
-    <div style="text-align: center; padding: 20px; border: 2px dashed var(--text-muted); border-radius: var(--radius);">
-      <p style="color: var(--text-muted); margin-bottom: 16px;">
-        ⚠️ Error al cargar PayPal. Por favor recarga la página o contacta soporte.
+    <div style="
+      text-align: center; 
+      padding: 24px; 
+      background: var(--surface-elevated);
+      border-radius: var(--radius);
+      border: 1px solid var(--accent-primary);
+    ">
+      <div style="color: var(--accent-primary); font-size: 24px; margin-bottom: 12px;">⚠️</div>
+      <h4 style="color: var(--text-primary); margin-bottom: 12px;">Error Temporal</h4>
+      <p style="color: var(--text-secondary); margin-bottom: 16px; font-size: 14px;">
+        No se pudo cargar el sistema de pagos. Por favor:
       </p>
-      <button class="btn secondary" onclick="location.reload()">
-        🔄 Recargar Página
-      </button>
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+        <button class="btn secondary" onclick="location.reload()" style="min-width: 120px;">
+          🔄 Recargar
+        </button>
+        <button class="btn ghost" onclick="closeModal('paymentModal')" style="min-width: 120px;">
+          Cerrar
+        </button>
+      </div>
     </div>
   `;
 }
@@ -614,13 +650,27 @@ function simulatePayPalPayment(plan, price) {
 function processSuccessfulPayment(plan, price, details) {
   hideLoading();
   closeModal('paymentModal');
-  showSuccess(`¡Pago exitoso! Te has suscrito al ${plan} por $${price}/mes.`);
+  
+  // More descriptive success message
+  const planNames = {
+    basic: 'Plan Básico',
+    premium: 'Plan Premium',
+    vip: 'Plan VIP'
+  };
+  
+  showSuccess(`¡Pago procesado exitosamente! 🎉 Has adquirido el ${planNames[plan] || plan} por $${price}.`);
   
   // Update UI to show subscription status
   updateSubscriptionStatus(plan);
   
-  // In a real application, you would send this to your backend
-  console.log('Payment processed:', { plan, price, details });
+  // Log payment details (in production, send to backend)
+  console.log('Payment successfully processed:', { 
+    plan, 
+    price, 
+    orderId: details.id,
+    payerName: details.payer?.name?.given_name,
+    timestamp: new Date().toISOString()
+  });
 }
 
 function updateSubscriptionStatus(plan) {
