@@ -76,6 +76,8 @@ body {
   overflow-x: hidden;
   min-height: 100vh;
   position: relative;
+  width: 100%;
+  max-width: 100vw;
 }
 
 /* Animated background particles */
@@ -119,6 +121,8 @@ body::before {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 var(--gap);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Fade in animation for all sections */
@@ -836,15 +840,15 @@ details p {
 
 @media (max-width: 768px) {
   .site-header {
-    padding: 20px 0;
+    padding: 16px 0;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
     text-align: center;
   }
   
   .brand {
     justify-content: center;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
   }
   
   .main-nav {
@@ -853,8 +857,9 @@ details p {
   
   .header-actions {
     justify-content: center;
-    gap: 12px;
+    gap: 10px;
     width: 100%;
+    flex-wrap: wrap;
   }
   
   .btn {
@@ -985,7 +990,8 @@ details p {
 
 @media (max-width: 480px) {
   .container, .site-wrap {
-    padding: 0 12px;
+    padding: 0 8px;
+    max-width: 100%;
   }
   
   .site-header {
@@ -1016,10 +1022,13 @@ details p {
   }
   
   .header-actions .btn {
-    padding: 12px 20px;
-    font-size: 14px;
-    min-width: 120px;
+    padding: 10px 16px;
+    font-size: 13px;
+    min-width: 100px;
     font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
   .profile-hero {
@@ -1039,7 +1048,7 @@ details p {
   }
   
   .profile-info h1 {
-    font-size: 26px;
+    font-size: 22px;
     margin-bottom: 6px;
     background: var(--gradient-primary);
     -webkit-background-clip: text;
@@ -1049,6 +1058,8 @@ details p {
     overflow-wrap: break-word;
     line-height: 1.2;
     max-width: 100%;
+    text-align: center;
+    hyphens: auto;
   }
   
   .profile-subtitle {
@@ -1061,13 +1072,15 @@ details p {
   }
   
   .profile-description {
-    font-size: 14px;
-    line-height: 1.5;
+    font-size: 13px;
+    line-height: 1.4;
     margin-bottom: 18px;
-    padding: 0 8px;
+    padding: 0 4px;
     word-wrap: break-word;
     overflow-wrap: break-word;
     max-width: 100%;
+    text-align: center;
+    hyphens: auto;
   }
   
   .profile-stats {
@@ -1165,43 +1178,100 @@ details p {
 
 /* Additional mobile-first improvements for very small devices */
 @media (max-width: 360px) {
+  * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .container, .site-wrap {
+    padding: 0 4px;
+    margin: 0;
+    max-width: 100%;
+  }
+  
   .profile-image {
     width: 100px;
     height: 100px;
   }
   
   .profile-info h1 {
-    font-size: 22px;
-    line-height: 1.2;
+    font-size: 18px;
+    line-height: 1.1;
     word-wrap: break-word;
     overflow-wrap: break-word;
     max-width: 100%;
+    text-align: center;
+    hyphens: auto;
+    margin: 0 auto;
+  }
+  
+  .profile-subtitle {
+    font-size: 12px;
+    text-align: center;
+    word-wrap: break-word;
+    max-width: 100%;
+  }
+  
+  .profile-description {
+    font-size: 12px;
+    line-height: 1.3;
+    padding: 0 2px;
+    text-align: center;
+    max-width: 100%;
+    word-wrap: break-word;
   }
   
   .photo-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 6px;
+    gap: 4px;
+    padding: 0 2px;
   }
   
   .btn {
-    padding: 10px 12px;
-    font-size: 12px;
+    padding: 8px 10px;
+    font-size: 11px;
+    min-width: 80px;
+    white-space: nowrap;
+  }
+  
+  .header-actions {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+  
+  .header-actions .btn {
+    width: 100%;
+    max-width: 150px;
+    margin: 0 auto;
   }
   
   .modal-inner {
     width: 100%;
-    margin: 5px;
-    padding: 16px;
+    margin: 2px;
+    padding: 12px;
   }
   
   .brand-text strong {
-    font-size: 16px;
+    font-size: 14px;
   }
   
   .logo {
-    width: 40px;
-    height: 40px;
-    font-size: 14px;
+    width: 36px;
+    height: 36px;
+    font-size: 12px;
+  }
+  
+  .profile-actions {
+    flex-direction: column;
+    gap: 8px;
+    max-width: 100%;
+  }
+  
+  .profile-actions .btn {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
   }
 }
 
